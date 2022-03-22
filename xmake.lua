@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("conan::fmt/8.1.1", {alias = "fmt"})
+add_requires("fmt", {alias = "fmt"})
 add_requires("conan::ms-gsl/3.1.0", {alias = "ms-gsl"})
 add_requires("conan::doctest/2.4.8", {alias = "doctest"})
 
@@ -7,24 +7,42 @@ target("Bairstow")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("src/*.cpp")
+    if is_plat("linux") then
+        -- add system link libraries
+        add_syslinks("pthread")
+        -- add compilation and link flags
+        add_ldflags("-lpthread", {force = true})
+    elseif is_plat("windows") then
+        if is_mode("release") then
+            add_cxflags("-MT")
+        elseif is_mode("debug") then
+            add_cxflags("-MTd")
+        end
+        add_ldflags("-nodefaultlib:msvcrt.lib")
+    end
     add_packages("ms-gsl")
-    -- add system link libraries
-    add_syslinks("pthread")
-    -- add compilation and link flags
-    add_ldflags("-lpthread", {force = true})
 
 target("test")
     set_kind("binary")
     add_deps("Bairstow")
     add_includedirs("include", {public = true})
     add_files("tests/*.cpp")
+    if is_plat("linux") then
+        -- add system link libraries
+        add_syslinks("pthread")
+        -- add compilation and link flags
+        add_ldflags("-lpthread", {force = true})
+    elseif is_plat("windows") then
+        if is_mode("release") then
+            add_cxflags("-MT")
+        elseif is_mode("debug") then
+            add_cxflags("-MTd")
+        end
+        add_ldflags("-nodefaultlib:msvcrt.lib")
+    end
     add_packages("fmt")
     add_packages("ms-gsl")
     add_packages("doctest")
-    -- add system link libraries
-    add_syslinks("pthread")
-    -- add compilation and link flags
-    add_ldflags("-lpthread", {force = true})
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

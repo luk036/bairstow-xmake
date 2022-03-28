@@ -1,9 +1,9 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
 add_requires("conan::ms-gsl/3.1.0", {alias = "ms-gsl"})
-add_requires("conan::doctest/2.4.8", {alias = "doctest"})
+add_requires("conan::doctest/2.4.5", {alias = "doctest"})
 
-target("Bairstow")
+target("bairstow")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("src/*.cpp")
@@ -24,7 +24,7 @@ target("Bairstow")
 
 target("test")
     set_kind("binary")
-    add_deps("Bairstow")
+    add_deps("bairstow")
     add_includedirs("include", {public = true})
     add_files("tests/*.cpp")
     if is_plat("linux") then

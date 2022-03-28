@@ -1,3 +1,5 @@
+set_languages("c++17")
+
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
 add_requires("conan::ms-gsl/3.1.0", {alias = "ms-gsl"})
@@ -12,7 +14,7 @@ target("bairstow")
         add_syslinks("pthread")
         -- add compilation and link flags
         add_ldflags("-lpthread", {force = true})
-    elseif is_plat("windows") then
+    elseif is_plat("windows") then 
         if is_mode("release") then
             add_cxflags("-MT")
         elseif is_mode("debug") then

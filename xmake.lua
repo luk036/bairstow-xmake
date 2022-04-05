@@ -42,9 +42,7 @@ target("test")
         end
         add_ldflags("-nodefaultlib:msvcrt.lib")
     end
-    add_packages("fmt")
-    add_packages("ms-gsl")
-    add_packages("doctest")
+    add_packages("fmt", "ms-gsl", "doctest")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

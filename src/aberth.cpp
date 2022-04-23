@@ -1,19 +1,18 @@
 #include <bairstow/ThreadPool.h>  // for ThreadPool
 
-// #include <__bit_reference>           // for __bit_reference
 #include <bairstow/rootfinding.hpp>  // for Options
 #include <cmath>                     // for acos, cos, sin
 #include <complex>                   // for complex, operator*, operator+
 #include <functional>                // for __base
 #include <future>                    // for future
+#include <py2cpp/enumerate.hpp>      // for enumerate
+#include <py2cpp/range.hpp>          // for range
 #include <thread>                    // for thread
 #include <utility>                   // for pair
 #include <vector>                    // for vector, vector<>::reference, __v...
-#include <py2cpp/range.hpp>          // for range
-#include <py2cpp/enumerate.hpp>      // for enumerate
 
-using std::sin;
 using std::cos;
+using std::sin;
 using std::vector;
 using Complex = std::complex<double>;
 
@@ -25,7 +24,7 @@ using Complex = std::complex<double>;
  * @param[in] r
  * @return double
  */
-template <typename C, typename Tp> inline auto horner_eval_g(const C& pb, const Tp& z) -> Tp {
+template <typename C, typename Tp> inline auto horner_eval_g(const C &pb, const Tp &z) -> Tp {
     Tp ans = pb[0];
     for (auto i : py::range(1, pb.size())) {
         ans = ans * z + pb[i];
@@ -39,7 +38,7 @@ template <typename C, typename Tp> inline auto horner_eval_g(const C& pb, const 
  * @param[in] pa
  * @return vector<vec2>
  */
-auto initial_aberth(const vector<double>& pa) -> vector<Complex> {
+auto initial_aberth(const vector<double> &pa) -> vector<Complex> {
     static const auto TWO_PI = 2.0 * std::acos(-1.0);
 
     const auto n = int(pa.size()) - 1;
@@ -64,8 +63,8 @@ auto initial_aberth(const vector<double>& pa) -> vector<Complex> {
  * @param[in] options maximum iterations and tolorance
  * @return std::pair<unsigned int, bool>
  */
-auto aberth(const vector<double>& pa, vector<Complex>& zs,
-            const Options& options = Options()) -> std::pair<unsigned int, bool> {
+auto aberth(const vector<double> &pa, vector<Complex> &zs, const Options &options = Options())
+    -> std::pair<unsigned int, bool> {
     const auto m = zs.size();
     const auto n = int(pa.size()) - 1;  // degree, assume even
     auto converged = vector<bool>(m, false);
@@ -84,10 +83,10 @@ auto aberth(const vector<double>& pa, vector<Complex>& zs,
                 continue;
             }
             results.emplace_back(pool.enqueue([&, i]() {
-                const auto& zi = zs[i];
+                const auto &zi = zs[i];
                 const auto P = horner_eval_g(pa, zi);
                 const auto tol_i = std::abs(P);
-                if (tol_i < 1e-15) { // tunable
+                if (tol_i < 1e-15) {  // tunable
                     converged[i] = true;
                     return tol_i;
                 }
@@ -102,8 +101,8 @@ auto aberth(const vector<double>& pa, vector<Complex>& zs,
                 return tol_i;
             }));
         }
-        for (auto&& result : results) {
-            auto&& res = result.get();
+        for (auto &&result : results) {
+            auto &&res = result.get();
             if (tol < res) {
                 tol = res;
             }

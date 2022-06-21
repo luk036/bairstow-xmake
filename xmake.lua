@@ -2,8 +2,8 @@ set_languages("c++17")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
-add_requires("conan::ms-gsl/3.1.0", {alias = "ms-gsl"})
-add_requires("conan::doctest/2.4.8", {alias = "doctest"})
+add_requires("gsl", {alias = "ms-gsl"})
+add_requires("doctest", {alias = "doctest"})
 
 target("bairstow")
     set_kind("static")

@@ -33,10 +33,10 @@ template <typename C, typename Tp> inline auto horner_eval_g(const C &pb, const 
 }
 
 /**
- * @brief
- *
- * @param[in] pa
- * @return vector<vec2>
+ * @brief 
+ * 
+ * @param pa 
+ * @return vector<Complex> 
  */
 auto initial_aberth(const vector<double> &pa) -> vector<Complex> {
     static const auto TWO_PI = 2.0 * std::acos(-1.0);

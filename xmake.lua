@@ -5,7 +5,7 @@ add_requires("fmt", {alias = "fmt"})
 add_requires("gsl", {alias = "ms-gsl"})
 add_requires("doctest", {alias = "doctest"})
 
-target("bairstow")
+target("Bairstow")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("src/*.cpp")
@@ -24,9 +24,9 @@ target("bairstow")
     end
     add_packages("ms-gsl")
 
-target("test")
+target("test_bairstow")
     set_kind("binary")
-    add_deps("bairstow")
+    add_deps("Bairstow")
     add_includedirs("include", {public = true})
     add_files("tests/*.cpp")
     if is_plat("linux") then

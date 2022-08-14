@@ -11,8 +11,8 @@ using vec2 = numeric::vector2<double>;
 using mat2 = numeric::matrix2<vec2>;
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 class Options {
   public:
@@ -21,31 +21,31 @@ class Options {
 };
 
 /**
- * @brief 
- * 
- * @param pa 
- * @return std::vector<vec2> 
+ * @brief
+ *
+ * @param pa
+ * @return std::vector<vec2>
  */
 extern auto initial_guess(const std::vector<double>& pa) -> std::vector<vec2>;
 
 /**
- * @brief 
- * 
- * @param pa 
- * @param vrs 
- * @param options 
- * @return std::pair<unsigned int, bool> 
+ * @brief
+ *
+ * @param pa
+ * @param vrs
+ * @param options
+ * @return std::pair<unsigned int, bool>
  */
 extern auto pbairstow_even(const std::vector<double>& pa, std::vector<vec2>& vrs,
                            const Options& options) -> std::pair<unsigned int, bool>;
 
 /**
- * @brief 
- * 
- * @param pb 
- * @param n 
- * @param vr 
- * @return vec2 
+ * @brief
+ *
+ * @param pb
+ * @param n
+ * @param vr
+ * @return vec2
  */
 extern auto horner(std::vector<double>& pb, std::size_t n, const vec2& vr) -> vec2;
 

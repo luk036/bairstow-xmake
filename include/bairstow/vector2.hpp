@@ -14,7 +14,7 @@ namespace numeric {
         T1 _x;
         T2 _y;
 
-      public:
+      
         /**
          * @brief Construct a new vector2 object
          *
@@ -37,7 +37,7 @@ namespace numeric {
          * @tparam U1
          * @tparam U2
          */
-        template <typename U1, typename U2> constexpr vector2(const vector2<U1, U2>& other)
+        template <typename U1, typename U2> constexpr explicit vector2(const vector2<U1, U2>& other)
             : _x(other.x()), _y(other.y()) {}
 
         /**

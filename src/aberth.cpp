@@ -33,10 +33,10 @@ template <typename C, typename Tp> inline auto horner_eval_g(const C &pb, const 
 }
 
 /**
- * @brief
- *
- * @param pa
- * @return vector<Complex>
+ * @brief 
+ * 
+ * @param pa 
+ * @return vector<Complex> 
  */
 auto initial_aberth(const vector<double> &pa) -> vector<Complex> {
     static const auto TWO_PI = 2.0 * std::acos(-1.0);
@@ -72,7 +72,7 @@ auto aberth(const vector<double> &pa, vector<Complex> &zs, const Options &option
     for (auto i : py::range(n)) {
         pb[i] = (n - i) * pa[i];
     }
-    ThreadPool pool(std::thread::hardware_concurrency());
+    auto pool = ThreadPool(std::thread::hardware_concurrency());
 
     for (auto niter : py::range(options.max_iter)) {
         auto tol = 0.0;

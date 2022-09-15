@@ -49,7 +49,7 @@ auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<vec2>& vrs,
     auto found = false;
     auto converged = std::vector<bool>(M, false);
     auto niter = 1U;
-    ThreadPool pool(std::thread::hardware_concurrency());
+    auto pool = ThreadPool(std::thread::hardware_concurrency());
 
     for (; niter != options.max_iter; ++niter) {
         auto tol = 0.0;

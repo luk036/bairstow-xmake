@@ -1,5 +1,5 @@
 #include <bairstow/ThreadPool.h>  // for ThreadPool
-#include <stddef.h>               // for size_t
+#include <cstddef>               // for size_t
 
 // #include <__bit_reference>           // for __bit_reference
 #include <bairstow/rootfinding.hpp>  // for vec2, delta, Options, horner_eval
@@ -79,7 +79,7 @@ auto pbairstow_even(const std::vector<double>& pa, std::vector<vec2>& vrs,
     auto found = false;
     auto converged = std::vector<bool>(M, false);
     auto niter = 1U;
-    ThreadPool pool(std::thread::hardware_concurrency());
+    auto pool = ThreadPool(std::thread::hardware_concurrency());
 
     for (; niter != options.max_iter; ++niter) {
         auto tol = 0.0;

@@ -32,6 +32,7 @@ template <typename C, typename Tp> inline auto horner_eval_g(const C &pb, const 
     return ans;
 }
 
+
 /**
  * @brief 
  * 
@@ -41,7 +42,7 @@ template <typename C, typename Tp> inline auto horner_eval_g(const C &pb, const 
 auto initial_aberth(const vector<double> &pa) -> vector<Complex> {
     static const auto TWO_PI = 2.0 * std::acos(-1.0);
 
-    const auto n = int(pa.size()) - 1;
+    const auto n = pa.size() - 1;
     const auto c = -pa[1] / (n * pa[0]);
     const auto Pc = horner_eval_g(pa, c);
     const auto re = std::pow(Complex(-Pc), 1.0 / n);
@@ -66,7 +67,7 @@ auto initial_aberth(const vector<double> &pa) -> vector<Complex> {
 auto aberth(const vector<double> &pa, vector<Complex> &zs, const Options &options = Options())
     -> std::pair<unsigned int, bool> {
     const auto m = zs.size();
-    const auto n = int(pa.size()) - 1;  // degree, assume even
+    const auto n = pa.size() - 1;  // degree, assume even
     auto converged = vector<bool>(m, false);
     auto pb = vector<double>(n);
     for (auto i : py::range(n)) {

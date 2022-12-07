@@ -19,17 +19,17 @@ using Complex = std::complex<double>;
 /**
  * @brief
  *
- * @param[in,out] pb
+ * @param[in,out] coeffs
  * @param[in] n
  * @param[in] r
  * @return double
  */
-template <typename C, typename Tp> inline auto horner_eval_g(const C &pb, const Tp &z) -> Tp {
-    Tp ans = pb[0];
-    for (auto i : py::range(1, pb.size())) {
-        ans = ans * z + pb[i];
+template <typename C, typename Tp> inline auto horner_eval_g(const C &coeffs, const Tp &z) -> Tp {
+    Tp res = coeffs[0];
+    for (auto i : py::range(1, coeffs.size())) {
+        res = res * z + coeffs[i];
     }
-    return ans;
+    return res;
 }
 
 
@@ -69,9 +69,9 @@ auto aberth(const vector<double> &pa, vector<Complex> &zs, const Options &option
     const auto m = zs.size();
     const auto n = pa.size() - 1;  // degree, assume even
     auto converged = vector<bool>(m, false);
-    auto pb = vector<double>(n);
+    auto coeffs = vector<double>(n);
     for (auto i : py::range(n)) {
-        pb[i] = (n - i) * pa[i];
+        coeffs[i] = (n - i) * pa[i];
     }
     auto pool = ThreadPool(std::thread::hardware_concurrency());
 
@@ -91,7 +91,7 @@ auto aberth(const vector<double> &pa, vector<Complex> &zs, const Options &option
                     converged[i] = true;
                     return tol_i;
                 }
-                auto P1 = horner_eval_g(pb, zi);
+                auto P1 = horner_eval_g(coeffs, zi);
                 for (auto [j, zj] : py::enumerate(zs)) {
                     if (j == i) {
                         continue;

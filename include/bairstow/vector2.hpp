@@ -14,7 +14,6 @@ namespace numeric {
         T1 _x;
         T2 _y;
 
-      
         /**
          * @brief Construct a new vector2 object
          *

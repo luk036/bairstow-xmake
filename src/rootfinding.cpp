@@ -1,5 +1,6 @@
 #include <bairstow/ThreadPool.h>  // for ThreadPool
-#include <cstddef>               // for size_t
+
+#include <cstddef>  // for size_t
 
 // #include <__bit_reference>           // for __bit_reference
 #include <bairstow/rootfinding.hpp>  // for vec2, delta, Options, horner_eval

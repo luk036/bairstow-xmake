@@ -7,8 +7,8 @@
 #include "matrix2.hpp"
 #include "vector2.hpp"
 
-using vec2 = numeric::vector2<double>;
-using mat2 = numeric::matrix2<vec2>;
+using vec2 = numeric::Vector2<double>;
+using mat2 = numeric::Matrix2<vec2>;
 
 /**
  * @brief

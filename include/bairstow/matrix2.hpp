@@ -6,28 +6,28 @@
 
 namespace numeric {
     /**
-     * @brief matrix2
+     * @brief Matrix2
      *
      * @tparam T1
      * @tparam T2
      */
-    template <typename T1, typename T2 = T1> class matrix2 : public vector2<T1, T2> {
+    template <typename T1, typename T2 = T1> class Matrix2 : public Vector2<T1, T2> {
       public:
         /**
-         * @brief Construct a new matrix2 object
+         * @brief Construct a new Matrix2 object
          *
          * @param x
          * @param y
          */
-        constexpr matrix2(T1&& x, T2&& y) noexcept : vector2<T1, T2>{std::move(x), std::move(y)} {}
+        constexpr Matrix2(T1&& x, T2&& y) noexcept : Vector2<T1, T2>{std::move(x), std::move(y)} {}
 
         // /**
-        //  * @brief Construct a new matrix2 object
+        //  * @brief Construct a new Matrix2 object
         //  *
         //  * @param x
         //  * @param y
         //  */
-        // constexpr matrix2(const T1& x, const T2& y) : vector2<T1, T2>{x, y} {}
+        // constexpr Matrix2(const T1& x, const T2& y) : Vector2<T1, T2>{x, y} {}
 
         /** @name Arithmetic operators
          *  definie +, -, *, /, +=, -=, *=, /=, etc.
@@ -37,9 +37,9 @@ namespace numeric {
         /**
          * @brief Negate
          *
-         * @return matrix2<T1, T2>
+         * @return Matrix2<T1, T2>
          */
-        constexpr auto operator-() const -> matrix2<T1, T2> { return {-this->x(), -this->y()}; }
+        constexpr auto operator-() const -> Matrix2<T1, T2> { return {-this->x(), -this->y()}; }
 
         /**
          * @brief Add
@@ -47,10 +47,10 @@ namespace numeric {
          * @tparam U1
          * @tparam U2
          * @param other
-         * @return matrix2<T1, T2>&
+         * @return Matrix2<T1, T2>&
          */
-        template <typename U1, typename U2> constexpr auto operator+=(const matrix2<U1, U2>& other)
-            -> matrix2<T1, T2>& {
+        template <typename U1, typename U2> constexpr auto operator+=(const Matrix2<U1, U2>& other)
+            -> Matrix2<T1, T2>& {
             this->_x += other.x();
             this->_y += other.y();
             return *this;
@@ -62,10 +62,10 @@ namespace numeric {
          * @tparam U1
          * @tparam U2
          * @param other
-         * @return matrix2<T1, T2>&
+         * @return Matrix2<T1, T2>&
          */
         template <typename U1, typename U2>  //
-        constexpr auto operator-=(const matrix2<U1, U2>& other) -> matrix2<T1, T2>& {
+        constexpr auto operator-=(const Matrix2<U1, U2>& other) -> Matrix2<T1, T2>& {
             this->_x -= other.x();
             this->_y -= other.y();
             return *this;
@@ -76,9 +76,9 @@ namespace numeric {
          *
          * @tparam R
          * @param alpha
-         * @return matrix2<T1, T2>&
+         * @return Matrix2<T1, T2>&
          */
-        template <typename R> constexpr auto operator*=(const R& alpha) -> matrix2<T1, T2>& {
+        template <typename R> constexpr auto operator*=(const R& alpha) -> Matrix2<T1, T2>& {
             this->_x *= alpha;
             this->_y *= alpha;
             return *this;
@@ -89,9 +89,9 @@ namespace numeric {
          *
          * @tparam R
          * @param alpha
-         * @return matrix2<T1, T2>&
+         * @return Matrix2<T1, T2>&
          */
-        template <typename R> constexpr auto operator/=(const R& alpha) -> matrix2<T1, T2>& {
+        template <typename R> constexpr auto operator/=(const R& alpha) -> Matrix2<T1, T2>& {
             this->_x /= alpha;
             this->_y /= alpha;
             return *this;
@@ -104,11 +104,11 @@ namespace numeric {
          * @tparam U2
          * @param x
          * @param y
-         * @return matrix2<T1, T2>
+         * @return Matrix2<T1, T2>
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(matrix2<T1, T2> x, const matrix2<U1, U2>& y)
-            -> matrix2<T1, T2> {
+        friend constexpr auto operator+(Matrix2<T1, T2> x, const Matrix2<U1, U2>& y)
+            -> Matrix2<T1, T2> {
             return std::move(x) += y;
         }
 
@@ -119,11 +119,11 @@ namespace numeric {
          * @tparam U2
          * @param[in] x
          * @param[in] y
-         * @return matrix2<T1, T2>
+         * @return Matrix2<T1, T2>
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(matrix2<T1, T2> x, const matrix2<U1, U2>& y)
-            -> matrix2<T1, T2> {
+        friend constexpr auto operator-(Matrix2<T1, T2> x, const Matrix2<U1, U2>& y)
+            -> Matrix2<T1, T2> {
             return std::move(x) -= y;
         }
 
@@ -133,10 +133,10 @@ namespace numeric {
          * @tparam R
          * @param[in] x
          * @param[in] alpha
-         * @return matrix2<T1, T2>
+         * @return Matrix2<T1, T2>
          */
-        template <typename R> friend constexpr auto operator*(matrix2<T1, T2> x, const R& alpha)
-            -> matrix2<T1, T2> {
+        template <typename R> friend constexpr auto operator*(Matrix2<T1, T2> x, const R& alpha)
+            -> Matrix2<T1, T2> {
             return x *= alpha;
         }
 
@@ -146,10 +146,10 @@ namespace numeric {
          * @tparam R
          * @param[in] alpha
          * @param[in] x
-         * @return matrix2<T1, T2>
+         * @return Matrix2<T1, T2>
          */
-        template <typename R> friend constexpr auto operator*(const R& alpha, matrix2<T1, T2> x)
-            -> matrix2<T1, T2> {
+        template <typename R> friend constexpr auto operator*(const R& alpha, Matrix2<T1, T2> x)
+            -> Matrix2<T1, T2> {
             return x *= alpha;
         }
 
@@ -159,23 +159,23 @@ namespace numeric {
          * @tparam R
          * @param[in] x
          * @param[in] alpha
-         * @return matrix2<T1, T2>
+         * @return Matrix2<T1, T2>
          */
-        template <typename R> friend constexpr auto operator/(matrix2<T1, T2> x, const R& alpha)
-            -> matrix2<T1, T2> {
+        template <typename R> friend constexpr auto operator/(Matrix2<T1, T2> x, const R& alpha)
+            -> Matrix2<T1, T2> {
             return x /= alpha;
         }
 
         /**
-         * @brief Multiply with vector2
+         * @brief Multiply with Vector2
          *
          * @tparam U1
          * @tparam U2
          * @param[in] other
-         * @return vector2<U1, U2>
+         * @return Vector2<U1, U2>
          */
         template <typename U1, typename U2>  //
-        constexpr auto mdot(const vector2<U1, U2>& other) const -> vector2<U1, U2> {
+        constexpr auto mdot(const Vector2<U1, U2>& other) const -> Vector2<U1, U2> {
             return {this->_x.dot(other), this->_y.dot(other)};
         }
 

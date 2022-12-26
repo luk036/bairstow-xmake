@@ -6,37 +6,37 @@
 namespace numeric {
 
     /**
-     * @brief vector2
+     * @brief Vector2
      *
      */
-    template <typename T1, typename T2 = T1> class vector2 {
+    template <typename T1, typename T2 = T1> class Vector2 {
       public:
         T1 _x;
         T2 _y;
 
         /**
-         * @brief Construct a new vector2 object
+         * @brief Construct a new Vector2 object
          *
          * @param x
          * @param y
          */
-        constexpr vector2(T1&& x, T2&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
+        constexpr Vector2(T1&& x, T2&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
 
         /**
-         * @brief Construct a new vector2 object
+         * @brief Construct a new Vector2 object
          *
          * @param x
          * @param y
          */
-        constexpr vector2(const T1& x, const T2& y) : _x{x}, _y{y} {}
+        constexpr Vector2(const T1& x, const T2& y) : _x{x}, _y{y} {}
 
         /**
-         * @brief Construct a new vector2 object
+         * @brief Construct a new Vector2 object
          *
          * @tparam U1
          * @tparam U2
          */
-        template <typename U1, typename U2> constexpr explicit vector2(const vector2<U1, U2>& other)
+        template <typename U1, typename U2> constexpr explicit Vector2(const Vector2<U1, U2>& other)
             : _x(other.x()), _y(other.y()) {}
 
         /**
@@ -71,7 +71,7 @@ namespace numeric {
          * @return constexpr auto
          */
         template <typename U1, typename U2>  //
-        constexpr auto dot(const vector2<U1, U2>& other) const -> double {
+        constexpr auto dot(const Vector2<U1, U2>& other) const -> double {
             return this->_x * other._x + this->_y * other._y;
         }
 
@@ -84,7 +84,7 @@ namespace numeric {
          * @return constexpr auto
          */
         template <typename U1, typename U2>  //
-        constexpr auto cross(const vector2<U1, U2>& other) const -> double {
+        constexpr auto cross(const Vector2<U1, U2>& other) const -> double {
             return this->_x * other._y - other._x * this->_y;
         }
 
@@ -96,9 +96,9 @@ namespace numeric {
         /**
          * @brief Negate
          *
-         * @return vector2
+         * @return Vector2
          */
-        constexpr auto operator-() const -> vector2<T1, T2> { return {-this->_x, -this->_y}; }
+        constexpr auto operator-() const -> Vector2<T1, T2> { return {-this->_x, -this->_y}; }
 
         /**
          * @brief Add
@@ -106,10 +106,10 @@ namespace numeric {
          * @tparam U1
          * @tparam U2
          * @param[in] other
-         * @return vector2&
+         * @return Vector2&
          */
-        template <typename U1, typename U2> constexpr auto operator+=(const vector2<U1, U2>& other)
-            -> vector2<T1, T2>& {
+        template <typename U1, typename U2> constexpr auto operator+=(const Vector2<U1, U2>& other)
+            -> Vector2<T1, T2>& {
             this->_x += other.x();
             this->_y += other.y();
             return *this;
@@ -121,10 +121,10 @@ namespace numeric {
          * @tparam U1
          * @tparam U2
          * @param[in] other
-         * @return vector2&
+         * @return Vector2&
          */
         template <typename U1, typename U2>  //
-        constexpr auto operator-=(const vector2<U1, U2>& other) -> vector2<T1, T2>& {
+        constexpr auto operator-=(const Vector2<U1, U2>& other) -> Vector2<T1, T2>& {
             this->_x -= other.x();
             this->_y -= other.y();
             return *this;
@@ -135,9 +135,9 @@ namespace numeric {
          *
          * @tparam R
          * @param[in] alpha
-         * @return vector2&
+         * @return Vector2&
          */
-        template <typename R> constexpr auto operator*=(const R& alpha) -> vector2<T1, T2>& {
+        template <typename R> constexpr auto operator*=(const R& alpha) -> Vector2<T1, T2>& {
             this->_x *= alpha;
             this->_y *= alpha;
             return *this;
@@ -148,9 +148,9 @@ namespace numeric {
          *
          * @tparam R
          * @param[in] alpha
-         * @return vector2&
+         * @return Vector2&
          */
-        template <typename R> constexpr auto operator/=(const R& alpha) -> vector2<T1, T2>& {
+        template <typename R> constexpr auto operator/=(const R& alpha) -> Vector2<T1, T2>& {
             this->_x /= alpha;
             this->_y /= alpha;
             return *this;
@@ -163,11 +163,11 @@ namespace numeric {
          * @tparam U2
          * @param[in] x
          * @param[in] y
-         * @return vector2
+         * @return Vector2
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(vector2<T1, T2> x, const vector2<U1, U2>& y)
-            -> vector2<T1, T2> {
+        friend constexpr auto operator+(Vector2<T1, T2> x, const Vector2<U1, U2>& y)
+            -> Vector2<T1, T2> {
             return x += y;
         }
 
@@ -178,11 +178,11 @@ namespace numeric {
          * @tparam U2
          * @param[in] x
          * @param[in] y
-         * @return vector2
+         * @return Vector2
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(vector2<T1, T2> x, const vector2<U1, U2>& y)
-            -> vector2<T1, T2> {
+        friend constexpr auto operator-(Vector2<T1, T2> x, const Vector2<U1, U2>& y)
+            -> Vector2<T1, T2> {
             return x -= y;
         }
 
@@ -192,10 +192,10 @@ namespace numeric {
          * @tparam R
          * @param[in] x
          * @param[in] alpha
-         * @return vector2
+         * @return Vector2
          */
-        template <typename R> friend constexpr auto operator*(vector2<T1, T2> x, const R& alpha)
-            -> vector2<T1, T2> {
+        template <typename R> friend constexpr auto operator*(Vector2<T1, T2> x, const R& alpha)
+            -> Vector2<T1, T2> {
             return x *= alpha;
         }
 
@@ -205,10 +205,10 @@ namespace numeric {
          * @tparam R
          * @param[in] alpha
          * @param[in] x
-         * @return vector2
+         * @return Vector2
          */
-        template <typename R> friend constexpr auto operator*(const R& alpha, vector2<T1, T2> x)
-            -> vector2<T1, T2> {
+        template <typename R> friend constexpr auto operator*(const R& alpha, Vector2<T1, T2> x)
+            -> Vector2<T1, T2> {
             return x *= alpha;
         }
 
@@ -218,10 +218,10 @@ namespace numeric {
          * @tparam R
          * @param[in] x
          * @param[in] alpha
-         * @return vector2
+         * @return Vector2
          */
-        template <typename R> friend constexpr auto operator/(vector2<T1, T2> x, const R& alpha)
-            -> vector2<T1, T2> {
+        template <typename R> friend constexpr auto operator/(Vector2<T1, T2> x, const R& alpha)
+            -> Vector2<T1, T2> {
             return x /= alpha;
         }
 
@@ -235,7 +235,7 @@ namespace numeric {
          * @param[in] v
          * @return Stream&
          */
-        template <class Stream> friend auto operator<<(Stream& out, const vector2<T1, T2>& v)
+        template <class Stream> friend auto operator<<(Stream& out, const Vector2<T1, T2>& v)
             -> Stream& {
             out << "{" << v.x() << ", " << v.y() << "}";
             return out;

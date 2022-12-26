@@ -3,7 +3,7 @@
 // #include <__bit_reference>           // for __bit_reference
 #include <bairstow/autocorr.hpp>     // for extract_autocorr, initial_autocorr
 #include <bairstow/rootfinding.hpp>  // for vec2, delta, horner, Options
-#include <bairstow/vector2.hpp>      // for vector2, operator-, operator/
+#include <bairstow/vector2.hpp>      // for Vector2, operator-, operator/
 #include <cmath>                     // for abs, sqrt, acos, cos, pow
 #include <functional>                // for __base
 #include <future>                    // for future
@@ -74,10 +74,10 @@ auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<vec2>& vrs,
                     }
                     const auto vrj = vrs[j];  // make a copy, don't reference!
                     vA1 -= delta(vA, vrj, vri - vrj);
-                    const auto vrjn = numeric::vector2<double>(vrj.x(), 1.0) / vrj.y();
+                    const auto vrjn = numeric::Vector2<double>(vrj.x(), 1.0) / vrj.y();
                     vA1 -= delta(vA, vrjn, vri - vrjn);
                 }
-                const auto vrin = numeric::vector2<double>(vri.x(), 1.0) / vri.y();
+                const auto vrin = numeric::Vector2<double>(vri.x(), 1.0) / vri.y();
                 vA1 -= delta(vA, vrin, vri - vrin);
 
                 vrs[i] -= delta(vA, vri, std::move(vA1));  // Gauss-Seidel fashion

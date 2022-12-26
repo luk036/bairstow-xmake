@@ -13,10 +13,10 @@
 #include <utility>                   // for pair
 #include <vector>                    // for vector, vector<>::reference, __v...
 
-#include "bairstow/vector2.hpp"  // for operator-, vector2
+#include "bairstow/vector2.hpp"  // for operator-, Vector2
 
-// using vec2 = numeric::vector2<double>;
-// using mat2 = numeric::matrix2<vec2>;
+// using vec2 = numeric::Vector2<double>;
+// using mat2 = numeric::Matrix2<vec2>;
 
 /**
  * @brief

@@ -7,7 +7,7 @@
 #include <utility>                   // for pair
 #include <vector>                    // for vector
 
-#include "bairstow/vector2.hpp"  // for vector2
+#include "bairstow/vector2.hpp"  // for Vector2
 #include "fmt/format.h"          // for print
 
 TEST_CASE("test FIR") {

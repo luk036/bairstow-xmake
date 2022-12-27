@@ -1,6 +1,7 @@
 #pragma once
 
 // import numpy as np
+#include <gsl/gsl>
 #include <utility>
 #include <vector>
 
@@ -15,9 +16,9 @@ using Mat2 = numeric::Matrix2<Vec2>;
  *
  */
 class Options {
-  public:
-    unsigned int max_iter = 2000U;
-    double tol = 1e-14;
+public:
+  unsigned int max_iter = 2000U;
+  double tol = 1e-14;
 };
 
 /**
@@ -26,7 +27,7 @@ class Options {
  * @param pa
  * @return std::vector<Vec2>
  */
-extern auto initial_guess(const std::vector<double>& pa) -> std::vector<Vec2>;
+extern auto initial_guess(const std::vector<double> &pa) -> std::vector<Vec2>;
 
 /**
  * @brief
@@ -36,8 +37,9 @@ extern auto initial_guess(const std::vector<double>& pa) -> std::vector<Vec2>;
  * @param options
  * @return std::pair<unsigned int, bool>
  */
-extern auto pbairstow_even(const std::vector<double>& pa, std::vector<Vec2>& vrs,
-                           const Options& options) -> std::pair<unsigned int, bool>;
+extern auto pbairstow_even(const std::vector<double> &pa,
+                           std::vector<Vec2> &vrs, const Options &options)
+    -> std::pair<unsigned int, bool>;
 
 /**
  * @brief
@@ -47,7 +49,8 @@ extern auto pbairstow_even(const std::vector<double>& pa, std::vector<Vec2>& vrs
  * @param vr
  * @return Vec2
  */
-extern auto horner(std::vector<double>& pb, std::size_t n, const Vec2& vr) -> Vec2;
+extern auto horner(std::vector<double> &pb, std::size_t n, const Vec2 &vr)
+    -> Vec2;
 
 /**
  * @brief
@@ -56,10 +59,10 @@ extern auto horner(std::vector<double>& pb, std::size_t n, const Vec2& vr) -> Ve
  * @param[in] vp
  * @return Mat2
  */
-inline auto makeadjoint(const Vec2& vr, Vec2&& vp) -> Mat2 {
-    auto&& [r, t] = vr;
-    auto&& [p, m] = vp;
-    return {Vec2{-m, p}, Vec2{-p * t, p * r - m}};
+inline auto makeadjoint(const Vec2 &vr, Vec2 &&vp) -> Mat2 {
+  auto &&[r, t] = vr;
+  auto &&[p, m] = vp;
+  return {Vec2{-m, p}, Vec2{-p * t, p * r - m}};
 }
 
 /**
@@ -70,22 +73,30 @@ inline auto makeadjoint(const Vec2& vr, Vec2&& vp) -> Mat2 {
  * @param[in] vp
  * @return Mat2
  */
-inline auto delta(const Vec2& vA, const Vec2& vr, Vec2&& vp) -> Vec2 {
-    const auto mp = makeadjoint(vr, std::move(vp));  // 2 mul's
-    return mp.mdot(vA) / mp.det();                   // 6 mul's + 2 div's
+inline auto delta(const Vec2 &vA, const Vec2 &vr, Vec2 &&vp) -> Vec2 {
+  const auto mp = makeadjoint(vr, std::move(vp)); // 2 mul's
+  return mp.mdot(vA) / mp.det();                  // 6 mul's + 2 div's
 }
 
-inline auto suppress2(Vec2& vA, Vec2& vA1, const Vec2& vri, const Vec2& vrj) -> void {
-    const auto vp = vri - vrj;
-    const auto [r, q] = vri;
-    const auto [p, s] = vp;
-    const auto M = Mat2{Vec2{-s, -p}, Vec2{p * q, p * r - s}};
-    const auto e = M.det();
-    vA = M.mdot(vA) / e;
+/**
+ * @brief zero suppression
+ *
+ * @param[in,out] vA
+ * @param[in,out] vA1
+ * @param[in] vri
+ * @param[in] vrj
+ */
+inline auto suppress2(Vec2 &vA, Vec2 &vA1, const Vec2 &vri, const Vec2 &vrj)
+    -> void {
+  const auto [r, q] = vri;
+  const auto [p, s] = vri - vrj;
+  const auto M = Mat2{Vec2{-s, -p}, Vec2{p * q, p * r - s}};
+  const auto e = M.det();
+  vA = M.mdot(vA) / e;
 
-    const auto vd = vA1 - vA;
-    const auto vc = Vec2{vd.x(), vd.y() - vA.x() * p};
-    vA1 = M.mdot(vc) / e;
+  const auto vd = vA1 - vA;
+  const auto vc = Vec2{vd.x(), vd.y() - vA.x() * p};
+  vA1 = M.mdot(vc) / e;
 }
 
 /**
@@ -96,9 +107,10 @@ inline auto suppress2(Vec2& vA, Vec2& vA1, const Vec2& vri, const Vec2& vrj) -> 
  * @param[in] r
  * @return double
  */
-inline auto horner_eval(std::vector<double>& pb, std::size_t n, const double& z) -> double {
-    for (auto i = 0U; i != n; ++i) {
-        pb[i + 1] += pb[i] * z;
-    }
-    return pb[n];
+inline auto horner_eval(gsl::span<double> pb, std::size_t n, const double &z)
+    -> double {
+  for (auto i = 0U; i != n; ++i) {
+    pb[i + 1] += pb[i] * z;
+  }
+  return pb[n];
 }

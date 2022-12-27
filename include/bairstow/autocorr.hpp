@@ -18,7 +18,8 @@ class Options;
  * @param pa
  * @return std::vector<Vec2>
  */
-extern auto initial_autocorr(const std::vector<double>& pa) -> std::vector<Vec2>;
+extern auto initial_autocorr(const std::vector<double> &pa)
+    -> std::vector<Vec2>;
 
 /**
  * @brief
@@ -28,12 +29,13 @@ extern auto initial_autocorr(const std::vector<double>& pa) -> std::vector<Vec2>
  * @param options
  * @return std::pair<unsigned int, bool>
  */
-extern auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<Vec2>& vrs,
-                               const Options& options) -> std::pair<unsigned int, bool>;
+extern auto pbairstow_autocorr(const std::vector<double> &pa,
+                               std::vector<Vec2> &vrs, const Options &options)
+    -> std::pair<unsigned int, bool>;
 
 /**
  * @brief
  *
  * @param vr
  */
-extern void extract_autocorr(Vec2& vr);
+extern void extract_autocorr(Vec2 &vr);

@@ -2,7 +2,7 @@ set_languages("c++17")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
-add_requires("gsl", {alias = "ms-gsl"})
+add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("doctest", {alias = "doctest"})
 
 target("Bairstow")

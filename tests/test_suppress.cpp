@@ -1,22 +1,22 @@
-#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TEST_CASE
+#include <doctest/doctest.h> // for ResultBuilder, CHECK, TEST_CASE
 
-#include <bairstow/rootfinding.hpp>  // for horner, initial_guess, pbairstow...
-#include <utility>                   // for pair
-#include <vector>                    // for vector
+#include <bairstow/rootfinding.hpp> // for horner, initial_guess, pbairstow...
+#include <utility>                  // for pair
+#include <vector>                   // for vector
 
-#include "bairstow/vector2.hpp"  // for Vector2
-#include "fmt/format.h"          // for print
+#include "bairstow/vector2.hpp" // for Vector2
+#include "fmt/format.h"         // for print
 
 TEST_CASE("test suppress 2") {
-    auto vA = Vec2{3.0, 3.0};
-    auto vA1 = Vec2{1.0, 2.0};
-    const auto vri = Vec2{-2.0, 0.0};
-    const auto vrj = Vec2{4.0, -5.0};
+  auto vA = Vec2{3.0, 3.0};
+  auto vA1 = Vec2{1.0, 2.0};
+  const auto vri = Vec2{-2.0, 0.0};
+  const auto vrj = Vec2{4.0, -5.0};
 
-    suppress2(vA, vA1, vri, vrj);
+  suppress2(vA, vA1, vri, vrj);
 
-    CHECK(vA.x() == doctest::Approx(-0.0857143));
-    CHECK(vA.y() == doctest::Approx(-0.6));
+  CHECK(vA.x() == doctest::Approx(-0.0857143));
+  CHECK(vA.y() == doctest::Approx(-0.6));
 }
 
 // def test_suppress2():

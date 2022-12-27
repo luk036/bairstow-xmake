@@ -3,7 +3,7 @@
 #include <cstddef>  // for size_t
 
 // #include <__bit_reference>           // for __bit_reference
-#include <bairstow/rootfinding.hpp>  // for vec2, delta, Options, horner_eval
+#include <bairstow/rootfinding.hpp>  // for Vec2, delta, Options, horner_eval
 #include <cmath>                     // for abs, acos, cos, pow
 #include <functional>                // for __base
 #include <future>                    // for future
@@ -15,8 +15,8 @@
 
 #include "bairstow/vector2.hpp"  // for operator-, Vector2
 
-// using vec2 = numeric::Vector2<double>;
-// using mat2 = numeric::Matrix2<vec2>;
+// using Vec2 = numeric::Vector2<double>;
+// using Mat2 = numeric::Matrix2<Vec2>;
 
 /**
  * @brief
@@ -24,9 +24,9 @@
  * @param[in,out] pb
  * @param[in] n
  * @param[in] vr
- * @return vec2
+ * @return Vec2
  */
-auto horner(std::vector<double>& pb, size_t n, const vec2& vr) -> vec2 {
+auto horner(std::vector<double>& pb, size_t n, const Vec2& vr) -> Vec2 {
     const auto& r = vr.x();
     const auto& t = vr.y();
     pb[1] -= pb[0] * r;
@@ -34,16 +34,16 @@ auto horner(std::vector<double>& pb, size_t n, const vec2& vr) -> vec2 {
         pb[i] -= pb[i - 1] * r + pb[i - 2] * t;
     }
     pb[n] -= pb[n - 2] * t;
-    return vec2{pb[n - 1], pb[n]};
+    return Vec2{pb[n - 1], pb[n]};
 }
 
 /**
  * @brief
  *
  * @param[in] pa
- * @return std::vector<vec2>
+ * @return std::vector<Vec2>
  */
-auto initial_guess(const std::vector<double>& pa) -> std::vector<vec2> {
+auto initial_guess(const std::vector<double>& pa) -> std::vector<Vec2> {
     static const auto PI = std::acos(-1.);
 
     auto N = int(pa.size()) - 1;
@@ -55,12 +55,12 @@ auto initial_guess(const std::vector<double>& pa) -> std::vector<vec2> {
     N *= 2;  // make even
     const auto k = PI / N;
     const auto m = c * c + re * re;
-    auto vr0s = std::vector<vec2>{};
+    auto vr0s = std::vector<Vec2>{};
     for (auto i = 1; i < N; i += 2) {
         const auto temp = re * std::cos(k * i);
         auto r0 = -2 * (c + temp);
         auto t0 = m + 2 * c * temp;
-        vr0s.emplace_back(vec2{std::move(r0), std::move(t0)});
+        vr0s.emplace_back(Vec2{std::move(r0), std::move(t0)});
     }
     return vr0s;
 }
@@ -73,7 +73,7 @@ auto initial_guess(const std::vector<double>& pa) -> std::vector<vec2> {
  * @param[in] options maximum iterations and tolorance
  * @return std::pair<unsigned int, bool>
  */
-auto pbairstow_even(const std::vector<double>& pa, std::vector<vec2>& vrs,
+auto pbairstow_even(const std::vector<double>& pa, std::vector<Vec2>& vrs,
                     const Options& options = Options()) -> std::pair<unsigned int, bool> {
     const auto N = pa.size() - 1;  // degree, assume even
     const auto M = vrs.size();
@@ -126,7 +126,7 @@ auto pbairstow_even(const std::vector<double>& pa, std::vector<vec2>& vrs,
     return {niter, found};
 }
 
-// auto find_rootq(const vec2& r) {
+// auto find_rootq(const Vec2& r) {
 //     auto hb = b / 2.;
 //     auto d = hb * hb - c;
 //     if (d < 0.) {

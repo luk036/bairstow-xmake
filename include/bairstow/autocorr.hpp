@@ -7,8 +7,8 @@
 #include "matrix2.hpp"
 #include "vector2.hpp"
 
-using vec2 = numeric::Vector2<double>;
-using mat2 = numeric::Matrix2<vec2>;
+using Vec2 = numeric::Vector2<double>;
+using Mat2 = numeric::Matrix2<Vec2>;
 
 class Options;
 
@@ -16,9 +16,9 @@ class Options;
  * @brief
  *
  * @param pa
- * @return std::vector<vec2>
+ * @return std::vector<Vec2>
  */
-extern auto initial_autocorr(const std::vector<double>& pa) -> std::vector<vec2>;
+extern auto initial_autocorr(const std::vector<double>& pa) -> std::vector<Vec2>;
 
 /**
  * @brief
@@ -28,7 +28,7 @@ extern auto initial_autocorr(const std::vector<double>& pa) -> std::vector<vec2>
  * @param options
  * @return std::pair<unsigned int, bool>
  */
-extern auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<vec2>& vrs,
+extern auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<Vec2>& vrs,
                                const Options& options) -> std::pair<unsigned int, bool>;
 
 /**
@@ -36,4 +36,4 @@ extern auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<vec2>&
  *
  * @param vr
  */
-extern void extract_autocorr(vec2& vr);
+extern void extract_autocorr(Vec2& vr);

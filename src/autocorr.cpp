@@ -2,7 +2,7 @@
 
 // #include <__bit_reference>           // for __bit_reference
 #include <bairstow/autocorr.hpp>     // for extract_autocorr, initial_autocorr
-#include <bairstow/rootfinding.hpp>  // for vec2, delta, horner, Options
+#include <bairstow/rootfinding.hpp>  // for Vec2, delta, horner, Options
 #include <bairstow/vector2.hpp>      // for Vector2, operator-, operator/
 #include <cmath>                     // for abs, sqrt, acos, cos, pow
 #include <functional>                // for __base
@@ -16,9 +16,9 @@
  * @brief initial guess (specific for auto-correlation function)
  *
  * @param[in] pa
- * @return std::vector<vec2>
+ * @return std::vector<Vec2>
  */
-auto initial_autocorr(const std::vector<double>& pa) -> std::vector<vec2> {
+auto initial_autocorr(const std::vector<double>& pa) -> std::vector<Vec2> {
     static const auto PI = std::acos(-1.);
 
     auto N = int(pa.size()) - 1;
@@ -27,9 +27,9 @@ auto initial_autocorr(const std::vector<double>& pa) -> std::vector<vec2> {
     N /= 2;
     const auto k = PI / N;
     const auto m = re * re;
-    auto vr0s = std::vector<vec2>{};
+    auto vr0s = std::vector<Vec2>{};
     for (auto i = 1; i < N; i += 2) {
-        vr0s.emplace_back(vec2{-2 * re * std::cos(k * i), m});
+        vr0s.emplace_back(Vec2{-2 * re * std::cos(k * i), m});
     }
     return vr0s;
 }
@@ -42,7 +42,7 @@ auto initial_autocorr(const std::vector<double>& pa) -> std::vector<vec2> {
  * @param[in] options maximum iterations and tolorance
  * @return std::pair<unsigned int, bool>
  */
-auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<vec2>& vrs,
+auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<Vec2>& vrs,
                         const Options& options = Options()) -> std::pair<unsigned int, bool> {
     const auto N = pa.size() - 1;  // degree, assume even
     const auto M = vrs.size();
@@ -107,14 +107,14 @@ auto pbairstow_autocorr(const std::vector<double>& pa, std::vector<vec2>& vrs,
  *
  * @param[in,out] vr
  */
-void extract_autocorr(vec2& vr) {
+void extract_autocorr(Vec2& vr) {
     const auto& r = vr.x();
     const auto& t = vr.y();
     const auto hr = r / 2.0;
     const auto d = hr * hr - t;
     if (d < 0.0) {  // complex conjugate root
         if (t > 1.0) {
-            vr = vec2{r, 1.0} / t;
+            vr = Vec2{r, 1.0} / t;
         }
         // else no need to change
     } else {  // two real roots
@@ -125,10 +125,10 @@ void extract_autocorr(vec2& vr) {
                 a2 = 1.0 / a2;
             }
             a1 = 1.0 / a1;
-            vr = vec2{a1 + a2, a1 * a2};
+            vr = Vec2{a1 + a2, a1 * a2};
         } else if (std::abs(a2) > 1.0) {
             a2 = 1.0 / a2;
-            vr = vec2{a1 + a2, a1 * a2};
+            vr = Vec2{a1 + a2, a1 * a2};
         }
         // else no need to change
     }

@@ -11,10 +11,10 @@
 #include "fmt/format.h"          // for print
 
 TEST_CASE("test auto-corr 1") {
-    // auto vA = vec2{0.1, 1.2};
-    // auto vA1 = vec2{2.3, 3.4};
-    // auto vr = vec2{4.5, 5.6};
-    // auto vrj = vec2{6.7, 7.8};
+    // auto vA = Vec2{0.1, 1.2};
+    // auto vA1 = Vec2{2.3, 3.4};
+    // auto vr = Vec2{4.5, 5.6};
+    // auto vrj = Vec2{6.7, 7.8};
     // auto vA1 = suppress(vA, vA1, vr, vrj);
     // fmt::print(check_newton(vA, vA1, vr));
     auto r = std::vector<double>{10.0, 34.0, 75.0, 94.0, 150.0, 94.0, 75.0, 34.0, 10.0};
@@ -47,10 +47,10 @@ TEST_CASE("test auto-corr 1") {
 }
 
 TEST_CASE("test autocorr FIR") {
-    // auto vA = vec2{0.1, 1.2};
-    // auto vA1 = vec2{2.3, 3.4};
-    // auto vr = vec2{4.5, 5.6};
-    // auto vrj = vec2{6.7, 7.8};
+    // auto vA = Vec2{0.1, 1.2};
+    // auto vA1 = Vec2{2.3, 3.4};
+    // auto vr = Vec2{4.5, 5.6};
+    // auto vrj = Vec2{6.7, 7.8};
     // auto vA1 = suppress(vA, vA1, vr, vrj);
     // fmt::print(check_newton(vA, vA1, vr));
     auto r = std::vector<double>{

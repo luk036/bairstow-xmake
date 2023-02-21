@@ -29,7 +29,7 @@ jobs:
           xmake --version
           xmake f -m coverage -y
           xmake
-          xmake run test_ellalgo
+          xmake run test_bairstow
 
       - name: Collect code coverage
         run: |

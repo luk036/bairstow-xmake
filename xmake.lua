@@ -5,23 +5,27 @@ add_requires("fmt", {alias = "fmt"})
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("doctest", {alias = "doctest"})
 
+if is_plat("linux") then
+    -- add system link libraries
+    add_syslinks("pthread")
+    -- add compilation and link flags
+    add_ldflags("-lpthread", {force = true})
+elseif is_plat("windows") then 
+    if is_mode("release") then
+        add_cxflags("-MT")
+    elseif is_mode("debug") then
+        add_cxflags("-MTd")
+    end
+    add_ldflags("-nodefaultlib:msvcrt.lib")
+end
+if is_mode("coverage") then
+    add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
+end
+
 target("Bairstow")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("src/*.cpp")
-    if is_plat("linux") then
-        -- add system link libraries
-        add_syslinks("pthread")
-        -- add compilation and link flags
-        add_ldflags("-lpthread", {force = true})
-    elseif is_plat("windows") then 
-        if is_mode("release") then
-            add_cxflags("-MT")
-        elseif is_mode("debug") then
-            add_cxflags("-MTd")
-        end
-        add_ldflags("-nodefaultlib:msvcrt.lib")
-    end
     add_packages("ms-gsl")
 
 target("test_bairstow")
@@ -29,19 +33,6 @@ target("test_bairstow")
     add_deps("Bairstow")
     add_includedirs("include", {public = true})
     add_files("tests/*.cpp")
-    if is_plat("linux") then
-        -- add system link libraries
-        add_syslinks("pthread")
-        -- add compilation and link flags
-        add_ldflags("-lpthread", {force = true})
-    elseif is_plat("windows") then
-        if is_mode("release") then
-            add_cxflags("-MT")
-        elseif is_mode("debug") then
-            add_cxflags("-MTd")
-        end
-        add_ldflags("-nodefaultlib:msvcrt.lib")
-    end
     add_packages("fmt", "ms-gsl", "doctest")
 
 --

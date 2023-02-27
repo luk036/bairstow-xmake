@@ -3,8 +3,9 @@
 /build
 /compile_commands.json
 /.cache
+/.trunk
 
-# MacOS Cache
+# macOS Cache
 .DS_Store
 
 

@@ -43,13 +43,13 @@ auto initial_aberth(const vector<double> &pa) -> vector<Complex> {
   static const auto TWO_PI = 2.0 * std::acos(-1.0);
 
   const auto n = pa.size() - 1;
-  const auto c = -pa[1] / (n * pa[0]);
+  const auto c = -pa[1] / (double(n) * pa[0]);
   const auto Pc = horner_eval_g(pa, c);
-  const auto re = std::pow(Complex(-Pc), 1.0 / n);
-  const auto k = TWO_PI / n;
+  const auto re = std::pow(Complex(-Pc), 1.0 / double(n));
+  const auto k = TWO_PI / double(n);
   auto z0s = vector<Complex>{};
   for (auto i : py::range(n)) {
-    auto theta = k * (0.25 + i);
+    auto theta = k * (0.25 + double(i));
     auto z0 = c + re * Complex{std::cos(theta), std::sin(theta)};
     z0s.emplace_back(z0);
   }
@@ -72,7 +72,7 @@ auto aberth(const vector<double> &pa, vector<Complex> &zs,
   auto converged = vector<bool>(m, false);
   auto coeffs = vector<double>(n);
   for (auto i : py::range(n)) {
-    coeffs[i] = (n - i) * pa[i];
+    coeffs[i] = double(n - i) * pa[i];
   }
   auto pool = ThreadPool(std::thread::hardware_concurrency());
 

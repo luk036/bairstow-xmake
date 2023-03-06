@@ -55,14 +55,14 @@ public:
    */
   constexpr auto y() const noexcept -> const T2 & { return this->_y; }
 
-  /**
-   * @brief
-   *
-   * @return double
-   */
-  constexpr auto norm_inf() const -> double {
-    return std::max(std::abs(this->_x), std::abs(this->_y));
-  }
+  // /**
+  //  * @brief
+  //  *
+  //  * @return double
+  //  */
+  // constexpr auto norm_inf() const -> double {
+  //   return std::max(std::abs(this->_x), std::abs(this->_y));
+  // }
 
   /**
    * @brief

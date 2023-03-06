@@ -21,15 +21,15 @@
 auto initial_autocorr(const std::vector<double> &pa) -> std::vector<Vec2> {
   static const auto PI = std::acos(-1.);
 
-  auto N = int(pa.size()) - 1;
-  const auto re = std::pow(std::abs(pa[N]), 1.0 / N);
+  auto n = int(pa.size() - 1);
+  const auto re = std::pow(std::abs(pa[n]), 1.0 / double(n));
 
-  N /= 2;
-  const auto k = PI / N;
+  n /= 2;
+  const auto k = PI / double(n);
   const auto m = re * re;
   auto vr0s = std::vector<Vec2>{};
-  for (auto i = 1; i < N; i += 2) {
-    vr0s.emplace_back(Vec2{-2 * re * std::cos(k * i), m});
+  for (auto i = 1; i < n; i += 2) {
+    vr0s.emplace_back(Vec2{-2 * re * std::cos(k * double(i)), m});
   }
   return vr0s;
 }
@@ -51,7 +51,7 @@ auto pbairstow_autocorr(const std::vector<double> &pa, std::vector<Vec2> &vrs,
   auto found = false;
   auto converged = std::vector<bool>(M, false);
   auto niter = 1U;
-  auto pool = ThreadPool(std::thread::hardware_concurrency());
+  ThreadPool pool(std::thread::hardware_concurrency());
 
   for (; niter != options.max_iter; ++niter) {
     auto tol = 0.0;

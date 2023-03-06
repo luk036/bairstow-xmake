@@ -80,7 +80,7 @@ auto pbairstow_even(const std::vector<double> &pa, std::vector<Vec2> &vrs,
   auto found = false;
   auto converged = std::vector<bool>(M, false);
   auto niter = 1U;
-  auto pool = ThreadPool(std::thread::hardware_concurrency());
+  ThreadPool pool(std::thread::hardware_concurrency());
 
   for (; niter != options.max_iter; ++niter) {
     auto tol = 0.0;

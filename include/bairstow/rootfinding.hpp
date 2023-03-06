@@ -60,8 +60,13 @@ extern auto horner(std::vector<double> &pb, std::size_t n, const Vec2 &vr)
  * @return Mat2
  */
 inline auto makeadjoint(const Vec2 &vr, Vec2 &&vp) -> Mat2 {
-  auto &&[r, t] = vr;
-  auto &&[p, m] = vp;
+  // auto &&[r, t] = vr;
+  // auto &&[p, m] = vp;
+  auto &&r = vr.x();
+  auto &&t = vr.y();
+  auto &&p = vp.x();
+  auto &&m = vp.y();
+
   return {Vec2{-m, p}, Vec2{-p * t, p * r - m}};
 }
 
@@ -88,8 +93,13 @@ inline auto delta(const Vec2 &vA, const Vec2 &vr, Vec2 &&vp) -> Vec2 {
  */
 inline auto suppress2(Vec2 &vA, Vec2 &vA1, const Vec2 &vri, const Vec2 &vrj)
     -> void {
-  const auto [r, q] = vri;
-  const auto [p, s] = vri - vrj;
+  // const auto [r, q] = vri;
+  // const auto [p, s] = vri - vrj;
+  const auto vp = vri - vrj;
+  auto &&r = vri.x();
+  auto &&q = vri.y();
+  auto &&p = vp.x();
+  auto &&s = vp.y();
   const auto M = Mat2{Vec2{-s, -p}, Vec2{p * q, p * r - s}};
   const auto e = M.det();
   vA = M.mdot(vA) / e;

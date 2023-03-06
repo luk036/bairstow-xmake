@@ -5,7 +5,6 @@
 #include <complex>                  // for complex, operator*, operator+
 #include <functional>               // for __base
 #include <future>                   // for future
-#include <py2cpp/enumerate.hpp>     // for enumerate
 #include <py2cpp/range.hpp>         // for range
 #include <thread>                   // for thread
 #include <utility>                  // for pair
@@ -74,7 +73,7 @@ auto aberth(const vector<double> &pa, vector<Complex> &zs,
   for (auto i : py::range(n)) {
     coeffs[i] = double(n - i) * pa[i];
   }
-  auto pool = ThreadPool(std::thread::hardware_concurrency());
+  ThreadPool pool(std::thread::hardware_concurrency());
 
   for (auto niter : py::range(options.max_iter)) {
     auto tol = 0.0;
@@ -93,11 +92,12 @@ auto aberth(const vector<double> &pa, vector<Complex> &zs,
           return tol_i;
         }
         auto P1 = horner_eval_g(coeffs, zi);
-        for (auto [j, zj] : py::enumerate(zs)) {
-          if (j == i) {
-            continue;
+        size_t j = 0;
+        for (const auto &zj : zs) {
+          if (j != i) {
+            P1 -= P / (zi - zj);
           }
-          P1 -= P / (zi - zj);
+          ++j;
         }
         zs[i] -= P / P1; // Gauss-Seidel fashion
         return tol_i;
